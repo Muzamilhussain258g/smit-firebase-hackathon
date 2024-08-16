@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="#">Muzamil hussain</a>
+            </div>
+            <nav>
+                <a href="./index.html" class="nav-items">home</a>
+                <a href="#" class="nav-items">about</a>
+                <a href="./login.html" class="nav-items">login</a>
+                <a href="./signup.html" class="nav-items">signup</a>
+                <button class="nav-items" id="sign_out">sign out</button>
+            </nav>
+        </div>
+    </header>
+    <h1 class="before-signIn">Sign in to add a blog</h1>
+    
+    <section class="section-dashboard display_none" id="section-dashboard">
+        <div class="container">
+            <h1 class="dashboard-heading">Add New blog</h1>
+            <label for="title">Title:</label>
+            <input type="text" class="inpTitle" placeholder="Enter a title for blog">
+            <label for="discription">Discription:</label>
+            <textarea name="" id="" placeholder="Enter blog discription" class="inpBlogDiscription"></textarea>
+            <button id="addBlogBtn">Add Blog</button>
+        </div>
+    </section>
+    <section class="section-blogs">
+        <div class="container grid grid-three-cols"  id="blog-section">
+            <div class="card">
+                <h2 class="card-title">Blog 1</h2>
+                <p class="card-discription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos velit perspiciatis deleniti culpa sequi iusto maxime, quo perferendis aliquid repellat. Cupiditate dolor, minus beatae consequuntur quos temporibus neque voluptate ipsam.</p>
+                <div class="card-date">14-August-1947</div>
+            </div>
+            <div class="card">
+                <h2 class="card-title">Blog 1</h2>
+                <p class="card-discription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos velit perspiciatis deleniti culpa sequi iusto maxime, quo perferendis aliquid repellat. Cupiditate dolor, minus beatae consequuntur quos temporibus neque voluptate ipsam.</p>
+                <div class="card-date">14-August-1947</div>
+            </div>
+            
+           
+            
+        </div>
+    </section>
+    <script src="./app.js"  type="module"></script>
+</body>
+
+</html>
