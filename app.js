@@ -1,5 +1,5 @@
 
-import { app, auth, db, collection, addDoc, getDocs, doc, deleteDoc } from "./firebase.js"
+import { getDoc, updateDoc, app, auth, db, collection, addDoc, getDocs, doc, deleteDoc } from "./firebase.js"
 // import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 // import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 // import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js"; 
@@ -8,7 +8,10 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 // target section blog start
 let blogSection = document.querySelector("#blog-section")
 let delBlogBtn = document.querySelector("#del_blog_btn")
-let editBlogBtn = document.querySelector("#edit_blog_btn")
+let editBlog = document.querySelector("#edit_blog")
+let editBlogbtn = document.querySelector('#editBlogBtn')
+
+let selectBlogId = "";
 // target section blog end
 
 // on auth state change
@@ -48,7 +51,7 @@ document.querySelector("#sign_out").addEventListener("click", () => {
 let blogTitle = document.querySelector(".inpTitle")
 let blogDiscription = document.querySelector(".inpBlogDiscription")
 let addBlogBtn = document.querySelector("#addBlogBtn")
-console.log(blogTitle, blogDiscription, addBlogBtn)
+// console.log(blogTitle, blogDiscription, addBlogBtn)
 
 // dashboard functionality start
 let addBlog = async () => {
@@ -58,17 +61,16 @@ let addBlog = async () => {
     title: blogTitle.value.trim(),
     discription: blogDiscription.value.trim()
   }
+
   try {
     const docRef = await addDoc(collection(db, "blog"), blog);
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-  // add data in firestore db end
 
   // read data from firestore db start
   fetchBlogs()
-  // read data from firestore db end
 
 
   blogTitle.value = ""
@@ -78,27 +80,71 @@ addBlogBtn.addEventListener("click", addBlog)
 
 
 
+// the function that delete blog on click
+window.deleteBlog = async (blogId) => {
+  await deleteDoc(doc(db, "blog", blogId));
+  console.log("deleted", blogId)
+  fetchBlogs()
+}
+
+
+// the function that edit blog when click on edit
+window.editBlog = async (blogId) => {
+  addBlogBtn.style.display = 'none';
+  editBlogbtn.style.display = 'block';
+  selectBlogId = blogId
+  try {
+    const docRef = doc(db, "blog", blogId);
+    const docSnap = await getDoc(docRef);
+
+    blogTitle.value = docSnap.data().title;
+    blogDiscription.value = docSnap.data().discription;
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+editBlogbtn.addEventListener("click", async () => {
+  console.log("editblogbtn")
+  // console.log(selectBlogId)
+  const blogRef = doc(db, "blog", selectBlogId);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(blogRef, {
+    title: blogTitle.value.trim(),
+    discription: blogDiscription.value.trim()
+  });
+
+  addBlogBtn.style.display = 'block';
+  editBlogbtn.style.display = 'none';
+  blogTitle.value = ""
+  blogDiscription.value = ""
+
+  fetchBlogs()
+})
+
+
 // the function that fetch data from fire db and show to the index page when page reload
-
 let fetchBlogs = async () => {
-
+  blogSection.innerHTML = ""
   // read data from firestore db start
   try {
     const querySnapshot = await getDocs(collection(db, "blog"));
     querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data().title}`);
+      // console.log(`${doc.id} => ${doc.data().title}`);
       blogSection.innerHTML +=
         `<div class="card">
         <h2 class="card-title">${doc.data().title}</h2>
         <p class="card-discription">${doc.data().discription}</p>
         <div class="card-date">14-August-1947</div>
         <div class="more_options">
-          <p id="edit_blog_btn">Edit</p>
-          <i class="fa-solid fa-trash-can" id="del_blog_btn"></i>
+          <p id="edit_blog" onclick="editBlog('${doc.id}')">Edit</p>
+          <i class="fa-solid fa-trash-can " id="del_blog_btn" onclick="deleteBlog('${doc.id}')"></i>
         </div>
       </div>`
-
     })
+
+    addBlogBtn.innerHTML = "Add"
   } catch (e) {
     console.log(e)
     blogSection.innerHTML = `<h1>Connection Error</h1>`
@@ -110,7 +156,4 @@ let fetchBlogs = async () => {
 
 fetchBlogs()
 
-// target a single blog
-blogSection.addEventListener(`click`,(e)=>{
-  console.log(e.target)
-})
+

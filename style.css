@@ -154,6 +154,18 @@ header .container{
         letter-spacing: .2rem;
         cursor: pointer;
     }
+    & #editBlogBtn{
+        margin-top: 3rem;
+        background-color: #4C8CF5;
+        color: white;
+        font-size: 2rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        border: none;
+        letter-spacing: .2rem;
+        cursor: pointer;
+        display: none;
+    }
 }
 /* section-dashboard end */
 

@@ -34,8 +34,11 @@
             <label for="discription">Discription:</label>
             <textarea name="" id="" placeholder="Enter blog discription" class="inpBlogDiscription"></textarea>
             <button id="addBlogBtn">Add Blog</button>
+            <button id="editBlogBtn">Edit</button>
         </div>
     </section>
+
+
     <section class="section-blogs">
         <div class="container grid grid-three-cols" id="blog-section">
             <div class="card">
@@ -45,7 +48,7 @@
                     minus beatae consequuntur quos temporibus neque voluptate ipsam.</p>
                 <div class="card-date">14-August-1947</div>
                 <div class="more_options">
-                    <i class="fa-solid fa-trash-can" id="del_blog_btn"></i>
+                    <i class="fa-solid fa-trash-can" id="del_blog_btn" onclick="deleteBlog()"></i>
                     <p id="edit_blog_btn">Edit</p>
                 </div>
             </div>
